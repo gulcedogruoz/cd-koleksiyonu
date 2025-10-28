@@ -6,16 +6,17 @@ import gspread
 from google.oauth2.service_account import Credentials
 import json
 
+# ---------------- GOOGLE SHEETS BAĞLANTISI ----------------
+SCOPE = ["https://www.googleapis.com/auth/spreadsheets"]
+
 service_account_info = json.loads(st.secrets["google"]["credentials"])
 CREDS = Credentials.from_service_account_info(service_account_info, scopes=SCOPE)
 
-
-# ---------------- GOOGLE SHEETS BAĞLANTISI ----------------
-SCOPE = ["https://www.googleapis.com/auth/spreadsheets"]
 client = gspread.authorize(CREDS)
 
-SHEET_ID = "1BdB5_Bu_JFbCEy1ZYB3Dn1JCnCRqNaa7ncsdmGPMyNA"
+SHEET_ID = "1BdB5_Bu_JFbCEy1ZYB3Dn1JnCRqNaa7ncsdmGPMyNA"
 sheet = client.open_by_key(SHEET_ID).sheet1
+
 
 @st.cache_data(ttl=60)
 def get_cd_list():
