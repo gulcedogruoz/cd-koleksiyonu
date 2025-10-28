@@ -192,7 +192,11 @@ if st.session_state.arama_sonucu:
     msg, status = st.session_state.arama_sonucu
 
     if st.session_state.cd_yok:
-        st.error(msg) if status == "error" else st.success(msg)
+        if status == "error":
+            st.error(msg)
+        else:
+            st.success(msg)
+
         if st.button("Koleksiyona Ekle ➕"):
             sheet.append_row([st.session_state.aranan_cd])
             st.success(f"✅ {st.session_state.aranan_cd} başarıyla eklendi! 🎞️")
@@ -204,6 +208,7 @@ if st.session_state.arama_sonucu:
         for cd in st.session_state.eslesenler:
             st.markdown(f"<div class='cd-item'>• <b>{cd}</b></div>", unsafe_allow_html=True)
         st.markdown("</div>", unsafe_allow_html=True)
+
 
 # --- TÜM KOLEKSİYONU GÖSTER BUTONU ---
 if st.button("Tüm Koleksiyonu Göster"):
