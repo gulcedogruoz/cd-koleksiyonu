@@ -4,10 +4,14 @@ import math
 import base64
 import gspread
 from google.oauth2.service_account import Credentials
+import json
+
+service_account_info = json.loads(st.secrets["google"]["credentials"])
+CREDS = Credentials.from_service_account_info(service_account_info, scopes=SCOPE)
+
 
 # ---------------- GOOGLE SHEETS BAĞLANTISI ----------------
 SCOPE = ["https://www.googleapis.com/auth/spreadsheets"]
-CREDS = Credentials.from_service_account_file("cd-koleksiyonu-76defc1b3d8b.json", scopes=SCOPE)
 client = gspread.authorize(CREDS)
 
 SHEET_ID = "1BdB5_Bu_JFbCEy1ZYB3Dn1JCnCRqNaa7ncsdmGPMyNA"
