@@ -8,15 +8,12 @@ import json
 
 # ---------------- GOOGLE SHEETS BAĞLANTISI ----------------
 SCOPE = ["https://www.googleapis.com/auth/spreadsheets"]
-
 service_account_info = json.loads(st.secrets["google"]["credentials"])
 CREDS = Credentials.from_service_account_info(service_account_info, scopes=SCOPE)
-
 client = gspread.authorize(CREDS)
 
 SHEET_ID = "1BdB5_Bu_JFbCEy1ZYB3Dn1JCnCRqNaa7ncsdmGPMyNA"
 sheet = client.open_by_key(SHEET_ID).sheet1
-
 
 @st.cache_data(ttl=60)
 def get_cd_list():
@@ -43,8 +40,6 @@ image_base64 = get_base64_image("arka_plan.JPG")
 st.markdown(f"""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap');
-            
-
 
 /* --- GENEL TASARIM --- */
 .stApp {{
@@ -138,17 +133,6 @@ div.stButton > button:hover {{
     text-align: center;
     margin-bottom: 20px;
 }}
-
-/* --- ALERT (UYARI / HATA) KUTULARI --- */
-div[data-testid="stAlert"] {{
-    background-color: rgba(120, 0, 0, 0.85) !important;
-    border: 2px solid rgba(255, 120, 120, 0.8) !important;
-    color: #fff5cc !important;
-    font-weight: 600 !important;
-    text-shadow: 0 0 8px rgba(0,0,0,0.6);
-    border-radius: 14px !important;
-    padding: 14px 20px !important;
-}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -171,7 +155,7 @@ st.markdown("<div style='height:160px;'></div>", unsafe_allow_html=True)
 # --- BAŞLIK ---
 st.markdown("<h1 class='title'>Tuğgen’in CD Koleksiyonu 💿</h1>", unsafe_allow_html=True)
 
-# --- LABEL (kutunun üstünde, yumuşak sarı ton, küçük boyut) ---
+# --- LABEL ---
 st.markdown("""
 <div style='text-align:left; margin-left:10px; margin-top:0px; margin-bottom:-200px;'>
     <label style='font-size:20px; font-weight:700; color:#ffec9e;
@@ -181,7 +165,6 @@ st.markdown("""
     </label>
 </div>
 """, unsafe_allow_html=True)
-
 
 # --- GİRİŞ ALANI ---
 query = st.text_input("", placeholder="örnek: Matrix, Titanic, Harry Potter...")
@@ -198,23 +181,25 @@ if st.button("CD Ara"):
         if matches:
             st.session_state.cd_yok = False
             st.session_state.eslesenler = matches
-            st.session_state.arama_sonucu = "Bu CD zaten var krdsm"
+            st.session_state.arama_sonucu = ("Bu CD zaten var krdsm", "success")  # 🟢
         else:
             st.session_state.cd_yok = True
             st.session_state.eslesenler = []
-            st.session_state.arama_sonucu = "Bu CD yok al hemen go go go!!!"
+            st.session_state.arama_sonucu = ("Bu CD yok al hemen go go go!!!", "error")  # 🔴
 
 # --- SONUÇ GÖRÜNÜMÜ ---
 if st.session_state.arama_sonucu:
+    msg, status = st.session_state.arama_sonucu
+
     if st.session_state.cd_yok:
-        st.error(st.session_state.arama_sonucu)
+        st.error(msg) if status == "error" else st.success(msg)
         if st.button("Koleksiyona Ekle ➕"):
             sheet.append_row([st.session_state.aranan_cd])
             st.success(f"✅ {st.session_state.aranan_cd} başarıyla eklendi! 🎞️")
             st.session_state.cd_yok = False
             st.session_state.arama_sonucu = None
     else:
-        st.success(st.session_state.arama_sonucu)
+        st.success(msg)
         st.markdown("<div class='cd-list'>", unsafe_allow_html=True)
         for cd in st.session_state.eslesenler:
             st.markdown(f"<div class='cd-item'>• <b>{cd}</b></div>", unsafe_allow_html=True)
