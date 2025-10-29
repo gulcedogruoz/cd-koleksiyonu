@@ -54,44 +54,15 @@ st.markdown(f"""
     padding-top: 100px !important;
 }}
 
-st.markdown(f"""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
-
-/* --- BAŞLIK --- */
-.title {{
-    text-align: center;
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 72px;
-    background: linear-gradient(
-        90deg,
-        #b8860b,
-        #ffd700,
-        #fff6a2,
-        #ffd700,
-        #b8860b
-    );
-    background-size: 300%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: goldShine 6s linear infinite;
-    text-shadow:
-        0 0 20px rgba(255, 220, 100, 0.8),
-        0 0 40px rgba(255, 180, 50, 0.4);
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+/* --- BAŞLIK --- */ 
+.title {{ 
+  text-align: center; 
+  font-family: 'Great Vibes', cursive; 
+  font-size: 64px; 
+  color: #ffebad; 
+  text-shadow: 0 0 18px rgba(255,220,120,0.9), 0 0 40px rgba(255,180,50,0.4); 
+  margin-bottom: 10px; 
 }}
-
-/* --- ALTIN IŞIK ANİMASYONU --- */
-@keyframes goldShine {{
-    0% {{ background-position: 0% center; }}
-    50% {{ background-position: 100% center; }}
-    100% {{ background-position: 0% center; }}
-}}
-</style>
-""", unsafe_allow_html=True)
-
-
 
 /* --- ARAMA KUTUSU --- */
 div[data-testid="stTextInputRoot"] > div:first-child {{
