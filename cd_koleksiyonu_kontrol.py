@@ -55,14 +55,20 @@ st.markdown(f"""
 }}
 
 /* --- BAŞLIK --- */
-.title {{
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
+.title {
     text-align: center;
-    font-family: 'Great Vibes', cursive;
-    font-size: 64px;
-    color: #ffebad;
-    text-shadow: 0 0 18px rgba(255,220,120,0.9), 0 0 40px rgba(255,180,50,0.4);
-    margin-bottom: 10px;
-}}
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 70px;
+    background: linear-gradient(90deg, #ffd700, #fff1a8, #ffcc00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+        0 0 25px rgba(255, 230, 120, 0.9),
+        0 0 50px rgba(255, 200, 70, 0.6);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
 
 /* --- ARAMA KUTUSU --- */
 div[data-testid="stTextInputRoot"] > div:first-child {{
