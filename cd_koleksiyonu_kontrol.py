@@ -55,14 +55,19 @@ st.markdown(f"""
 }}
 
 /* --- BAŞLIK --- */ 
-.title {{ 
-  text-align: center; 
-  font-family: 'Great Vibes', cursive; 
-  font-size: 64px; 
-  color: #ffebad; 
-  text-shadow: 0 0 18px rgba(255,220,120,0.9), 0 0 40px rgba(255,180,50,0.4); 
-  margin-bottom: 10px; 
+.title {{
+  text-align: center;
+  font-family: 'Cinzel Decorative', cursive;
+  font-size: 72px;
+  background: linear-gradient(90deg, #fff2b2 0%, #ffd700 25%, #ffb600 50%, #fff2b2 75%, #ffd700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.9),
+               0 0 50px rgba(255, 200, 50, 0.5),
+               0 0 80px rgba(255, 180, 0, 0.3);
+  margin-bottom: 15px;
 }}
+
 
 /* --- ARAMA KUTUSU --- */
 div[data-testid="stTextInputRoot"] > div:first-child {{
