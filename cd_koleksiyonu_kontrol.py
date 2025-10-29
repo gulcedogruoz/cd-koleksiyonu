@@ -28,148 +28,126 @@ st.set_page_config(
     layout="centered"
 )
 
-# ---------------- ARKA PLAN FOTOĞRAFI ----------------
+# ---------------- GÖRSELLERİ BASE64’E ÇEVİRME ----------------
 def get_base64_image(image_path):
     with open(image_path, "rb") as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
+        return base64.b64encode(f.read()).decode()
 
-image_base64 = get_base64_image("arka_plan.JPG")
-
-import base64
-
-# --- GÖRSELLERİ BASE64’E ÇEVİRME ---
-def get_base64_image(image_path):
-    with open(image_path, "rb") as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-cd_image_base64 = get_base64_image("cd_disk.png")
-tray_image_base64 = get_base64_image("dvd_tray.png")
-
+bg_base64 = get_base64_image("arka_plan.JPG")
+cd_base64 = get_base64_image("cd_disk.png")
+tray_base64 = get_base64_image("dvd_tray.png")
 
 # ---------------- CSS TASARIM ----------------
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
 
 /* --- GENEL TASARIM --- */
 .stApp {{
     background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.75)),
-                url("data:image/jpg;base64,{image_base64}");
+                url("data:image/jpg;base64,{bg_base64}");
     background-size: cover;
-    background-position: left center; 
+    background-position: center;
     background-attachment: fixed;
     color: #fff9e6;
     font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
-    padding-top: 100px !important;
+    padding-top: 80px !important;
 }}
-st.markdown(f"""
-<style>
-
-st.markdown(f"""
-<style>
 
 /* --- BAŞLIK --- */
 .title {{
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 68px;
-  background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-  animation: fadeInTitle 2s ease-out forwards;
-  margin-bottom: 40px;
+    text-align: center;
+    font-size: 68px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(255,215,0,0.8);
+    animation: fadeInTitle 2s ease-out forwards;
 }}
 
 @keyframes fadeInTitle {{
-  from {{
-    opacity: 0;
-    transform: translateY(-30px);
-  }}
-  to {{
-    opacity: 1;
-    transform: translateY(0);
-  }}
+    0% {{ opacity: 0; transform: translateY(-30px); }}
+    100% {{ opacity: 1; transform: translateY(0); }}
 }}
 
 /* --- SAHNE --- */
 .scene {{
-  position: relative;
-  width: 400px;
-  height: 250px;
-  margin: 0 auto;
-  margin-top: 40px;
+    position: relative;
+    width: 380px;
+    height: 220px;
+    margin: 40px auto;
 }}
 
 .cd {{
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(0) rotate(0deg);
-  width: 120px;
-  height: 120px;
-  background: url("data:image/png;base64,{cd_image_base64}") no-repeat center/contain;
-  animation: liftAndInsert 5s ease-in-out forwards;
-  z-index: 3;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+    width: 120px;
+    height: 120px;
+    background: url("data:image/png;base64,{cd_base64}") no-repeat center/contain;
+    animation: insertCD 5s ease-in-out forwards;
+    z-index: 3;
 }}
 
 .player {{
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 300px;
-  height: 120px;
-  background: url("data:image/png;base64,{tray_image_base64}") no-repeat center/contain;
-  background-size: contain;
-  z-index: 1;
-  animation: trayClose 5s ease-in-out forwards;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 120px;
+    background: url("data:image/png;base64,{tray_base64}") no-repeat center/contain;
+    z-index: 2;
 }}
 
-@keyframes liftAndInsert {{
-  0% {{
-    transform: translateX(-50%) translateY(0) rotate(0deg);
-    opacity: 0;
-  }}
-  10% {{
-    opacity: 1;
-  }}
-  50% {{
-    transform: translateX(-50%) translateY(-120px) rotate(720deg);
-  }}
-  70% {{
-    transform: translateX(-50%) translateY(-140px) rotate(900deg);
-  }}
-  85% {{
-    transform: translateX(-50%) translateY(-150px) scale(0.95);
-  }}
-  100% {{
-    transform: translateX(-50%) translateY(-160px) scale(0.8);
-    opacity: 0.8;
-  }}
+@keyframes insertCD {{
+    0% {{
+        transform: translateX(-50%) translateY(60px) rotate(0deg);
+        opacity: 0;
+    }}
+    20% {{
+        opacity: 1;
+    }}
+    50% {{
+        transform: translateX(-50%) translateY(-80px) rotate(720deg);
+    }}
+    70% {{
+        transform: translateX(-50%) translateY(-110px) rotate(1080deg);
+    }}
+    85% {{
+        transform: translateX(-50%) translateY(-125px) scale(0.95);
+    }}
+    100% {{
+        transform: translateX(-50%) translateY(-135px) scale(0.8);
+        opacity: 0.9;
+    }}
+}}
+
+/* --- TEPSİ KAPANMA ANİMASYONU --- */
+.tray-close {{
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 8px;
+    background: #111;
+    border-radius: 3px;
+    animation: trayClose 5s ease-in-out forwards;
 }}
 
 @keyframes trayClose {{
-  0%, 70% {{
-    transform: translateX(-50%) scaleX(1);
-  }}
-  100% {{
-    transform: translateX(-50%) scaleX(0.3);
-    opacity: 0.7;
-  }}
+    0%, 70% {{
+        width: 180px;
+        opacity: 1;
+    }}
+    100% {{
+        width: 0;
+        opacity: 0.7;
+    }}
 }}
-
-</style>
-""", unsafe_allow_html=True)
-
-
-
-
-
 
 /* --- ARAMA KUTUSU --- */
 div[data-testid="stTextInputRoot"] > div:first-child {{
@@ -215,21 +193,7 @@ div.stButton > button:hover {{
     box-shadow: 0 0 25px rgba(255,200,100,0.6);
 }}
 
-/* --- SİL BUTONU (Kırmızı) --- */
-div.stButton > button:has(span:contains("Sil")) {{
-    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%) !important;
-    color: #fff !important;
-    font-weight: bold !important;
-    border-radius: 20px !important;
-    box-shadow: 0 0 15px rgba(255, 60, 60, 0.6);
-    transition: all 0.2s ease-in-out;
-}}
-div.stButton > button:has(span:contains("Sil")):hover {{
-    background: linear-gradient(135deg, #ff8888, #ff4444) !important;
-    transform: scale(1.05);
-}}
-
-/* --- KOLEKSİYON GÖRÜNÜMÜ --- */
+/* --- KOLEKSİYON --- */
 .dvd-list {{
     background: rgba(0, 0, 0, 0.55);
     padding: 15px 20px;
@@ -254,7 +218,21 @@ div.stButton > button:has(span:contains("Sil")):hover {{
     text-align: center;
     margin-bottom: 20px;
 }}
+
 </style>
+""", unsafe_allow_html=True)
+
+# ---------------- STREAMLIT GÖRSEL ALAN ----------------
+st.markdown("""
+<div class='title'>
+  Tuğgen’in DVD Koleksiyonu 💿
+</div>
+
+<div class='scene'>
+  <div class='player'></div>
+  <div class='cd'></div>
+  <div class='tray-close'></div>
+</div>
 """, unsafe_allow_html=True)
 
 # ---------------- STREAMLIT MANTIK ----------------
@@ -267,25 +245,6 @@ if "aranan_dvd" not in st.session_state:
 if "eslesenler" not in st.session_state:
     st.session_state.eslesenler = []
 
-st.markdown("<div style='height:160px;'></div>", unsafe_allow_html=True)
-
-st.markdown("""
-<div class='title'>
-  Tuğgen’in DVD Koleksiyonu 💿
-</div>
-
-<div class='scene'>
-  <div class='player'></div>
-  <div class='cd'></div>
-</div>
-""", unsafe_allow_html=True)
-
-
-
-
-
-
-# --- GİRİŞ ALANI ---
 query = st.text_input("")
 
 # --- ARAMA BUTONU ---
@@ -306,7 +265,7 @@ if st.button("DVD Ara"):
             st.session_state.eslesenler = []
             st.session_state.arama_sonucu = ("Bu DVD yok al hemen go go go!!!", "error")
 
-# --- SONUÇ GÖRÜNÜMÜ ---
+# --- SONUÇLAR ---
 if st.session_state.arama_sonucu:
     msg, status = st.session_state.arama_sonucu
 
