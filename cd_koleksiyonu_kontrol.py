@@ -16,10 +16,10 @@ SHEET_ID = "1BdB5_Bu_JFbCEy1ZYB3Dn1JCnCRqNaa7ncsdmGPMyNA"
 sheet = client.open_by_key(SHEET_ID).sheet1
 
 @st.cache_data(ttl=60)
-def get_cd_list():
+def get_dvd_list():
     return sheet.col_values(1)[1:]
 
-cd_list = get_cd_list()
+dvd_list = get_dvd_list()
 
 # ---------------- SAYFA YAPILANDIRMASI ----------------
 st.set_page_config(
@@ -108,8 +108,22 @@ div.stButton > button:hover {{
     box-shadow: 0 0 25px rgba(255,200,100,0.6);
 }}
 
+/* --- SİL BUTONU (Kırmızı) --- */
+div.stButton > button:has(span:contains("Sil")) {{
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%) !important;
+    color: #fff !important;
+    font-weight: bold !important;
+    border-radius: 20px !important;
+    box-shadow: 0 0 15px rgba(255, 60, 60, 0.6);
+    transition: all 0.2s ease-in-out;
+}}
+div.stButton > button:has(span:contains("Sil")):hover {{
+    background: linear-gradient(135deg, #ff8888, #ff4444) !important;
+    transform: scale(1.05);
+}}
+
 /* --- KOLEKSİYON GÖRÜNÜMÜ --- */
-.cd-list {{
+.dvd-list {{
     background: rgba(0, 0, 0, 0.55);
     padding: 15px 20px;
     border-radius: 12px;
@@ -117,12 +131,12 @@ div.stButton > button:hover {{
     margin-top: 10px;
     box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
 }}
-.cd-item {{
+.dvd-item {{
     padding: 6px 0;
     font-size: 17px;
     border-bottom: 1px dashed rgba(255, 215, 128, 0.2);
 }}
-.cd-num {{
+.dvd-num {{
     color: #ffdd91;
     font-weight: bold;
 }}
@@ -137,16 +151,12 @@ div.stButton > button:hover {{
 """, unsafe_allow_html=True)
 
 # ---------------- STREAMLIT MANTIK ----------------
-DATA_FILE = Path("cd_listesi.txt")
-if not DATA_FILE.exists():
-    DATA_FILE.touch()
-
-if "cd_yok" not in st.session_state:
-    st.session_state.cd_yok = False
+if "dvd_yok" not in st.session_state:
+    st.session_state.dvd_yok = False
 if "arama_sonucu" not in st.session_state:
     st.session_state.arama_sonucu = None
-if "aranan_cd" not in st.session_state:
-    st.session_state.aranan_cd = ""
+if "aranan_dvd" not in st.session_state:
+    st.session_state.aranan_dvd = ""
 if "eslesenler" not in st.session_state:
     st.session_state.eslesenler = []
 
@@ -161,7 +171,7 @@ st.markdown("""
     <label style='font-size:20px; font-weight:700; color:#ffec9e;
     text-shadow:0 0 6px rgba(255,230,150,0.6);
     letter-spacing:0.3px; display:block;'>
-        CD ismini gir:
+        DVD ismini gir:
     </label>
 </div>
 """, unsafe_allow_html=True)
@@ -170,61 +180,69 @@ st.markdown("""
 query = st.text_input("", placeholder="örnek: Matrix, Titanic, Harry Potter...")
 
 # --- ARAMA BUTONU ---
-if st.button("CD Ara"):
+if st.button("DVD Ara"):
     if not query.strip():
-        st.warning("CD ismi girsene slk krdsm!!!")
+        st.warning("DVD ismi girsene slk krdsm!!!")
     else:
-        st.session_state.aranan_cd = query.strip()
+        st.session_state.aranan_dvd = query.strip()
         query_lower = query.lower()
-        matches = [cd for cd in cd_list if query_lower in cd.lower()]
+        matches = [dvd for dvd in dvd_list if query_lower in dvd.lower()]
 
         if matches:
-            st.session_state.cd_yok = False
+            st.session_state.dvd_yok = False
             st.session_state.eslesenler = matches
-            st.session_state.arama_sonucu = ("Bu CD zaten var krdsm", "success")  # 🟢
+            st.session_state.arama_sonucu = ("Bu DVD zaten var krdsm", "success")
         else:
-            st.session_state.cd_yok = True
+            st.session_state.dvd_yok = True
             st.session_state.eslesenler = []
-            st.session_state.arama_sonucu = ("Bu CD yok al hemen go go go!!!", "error")  # 🔴
+            st.session_state.arama_sonucu = ("Bu DVD yok al hemen go go go!!!", "error")
 
 # --- SONUÇ GÖRÜNÜMÜ ---
 if st.session_state.arama_sonucu:
     msg, status = st.session_state.arama_sonucu
 
-    if st.session_state.cd_yok:
-        if status == "error":
-            st.error(msg)
-        else:
-            st.success(msg)
-
+    if st.session_state.dvd_yok:
+        st.error(msg)
         if st.button("Koleksiyona Ekle ➕"):
-            sheet.append_row([st.session_state.aranan_cd])
-            st.success(f"✅ {st.session_state.aranan_cd} başarıyla eklendi! 🎞️")
-            st.session_state.cd_yok = False
+            sheet.append_row([st.session_state.aranan_dvd])
+            st.success(f"✅ {st.session_state.aranan_dvd} başarıyla eklendi! 🎞️")
+            st.session_state.dvd_yok = False
             st.session_state.arama_sonucu = None
+            st.cache_data.clear()
+            st.rerun()
     else:
         st.success(msg)
-        st.markdown("<div class='cd-list'>", unsafe_allow_html=True)
-        for cd in st.session_state.eslesenler:
-            st.markdown(f"<div class='cd-item'>• <b>{cd}</b></div>", unsafe_allow_html=True)
+        st.markdown("<div class='dvd-list'>", unsafe_allow_html=True)
+        for dvd in st.session_state.eslesenler:
+            col1, col2 = st.columns([4, 1])
+            with col1:
+                st.markdown(f"<div class='dvd-item'>• <b>{dvd}</b></div>", unsafe_allow_html=True)
+            with col2:
+                if st.button(f"Sil 🗑️", key=f"sil_{dvd}"):
+                    rows = sheet.get_all_values()
+                    for i, row in enumerate(rows[1:], start=2):
+                        if row and row[0].strip().lower() == dvd.lower():
+                            sheet.delete_rows(i)
+                            st.success(f"✅ '{dvd}' koleksiyondan silindi!")
+                            st.cache_data.clear()
+                            st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
-
 
 # --- TÜM KOLEKSİYONU GÖSTER BUTONU ---
 if st.button("Tüm Koleksiyonu Göster"):
-    if cd_list:
-        sorted_cds = sorted(cd_list, key=lambda x: x.lower())
-        total = len(sorted_cds)
-        st.markdown(f"<div class='collection-title'>{total} CD</div>", unsafe_allow_html=True)
+    if dvd_list:
+        sorted_dvds = sorted(dvd_list, key=lambda x: x.lower())
+        total = len(sorted_dvds)
+        st.markdown(f"<div class='collection-title'>{total} DVD</div>", unsafe_allow_html=True)
         midpoint = math.ceil(total / 2)
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("<div class='cd-list'>", unsafe_allow_html=True)
-            for i, cd in enumerate(sorted_cds[:midpoint], 1):
-                st.markdown(f"<div class='cd-item'><span class='cd-num'>{i}.</span> {cd}</div>", unsafe_allow_html=True)
+            st.markdown("<div class='dvd-list'>", unsafe_allow_html=True)
+            for i, dvd in enumerate(sorted_dvds[:midpoint], 1):
+                st.markdown(f"<div class='dvd-item'><span class='dvd-num'>{i}.</span> {dvd}</div>", unsafe_allow_html=True)
             st.markdown("</div>", unsafe_allow_html=True)
         with col2:
-            st.markdown("<div class='cd-list'>", unsafe_allow_html=True)
-            for i, cd in enumerate(sorted_cds[midpoint:], midpoint + 1):
-                st.markdown(f"<div class='cd-item'><span class='cd-num'>{i}.</span> {cd}</div>", unsafe_allow_html=True)
+            st.markdown("<div class='dvd-list'>", unsafe_allow_html=True)
+            for i, dvd in enumerate(sorted_dvds[midpoint:], midpoint + 1):
+                st.markdown(f"<div class='dvd-item'><span class='dvd-num'>{i}.</span> {dvd}</div>", unsafe_allow_html=True)
             st.markdown("</div>", unsafe_allow_html=True)
