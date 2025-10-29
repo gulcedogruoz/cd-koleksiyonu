@@ -41,37 +41,36 @@ st.markdown(f"""
 
 /* ---------------- GENEL ---------------- */
 .stApp {{
-  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.8)),
+  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.75)),
               url("data:image/jpg;base64,{bg_base64}");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   color: #fff9e6;
   font-family: 'Playfair Display', serif;
-  padding-top: 200px !important;
+  padding-top: 180px !important;
   overflow: hidden;
 }}
 
-/* ---------------- BAŞLIK ---------------- */
+/* ---------------- BAŞLIK (ALTIN YANSIMA) ---------------- */
 .title {{
-  text-align: center;
-  font-family: 'Playfair Display', serif;
-  font-size: 62px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  background: linear-gradient(45deg, #FFD700, #DAA520, #FFD700);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow:
-    0 0 8px rgba(255, 215, 0, 0.8),
-    0 0 20px rgba(255, 200, 0, 0.5),
-    0 0 40px rgba(255, 160, 0, 0.3);
-  animation: shimmer 6s infinite linear;
-  margin-bottom: -20px;
-}}
-@keyframes shimmer {{
-  0% {{ background-position: 0% 50%; }}
-  100% {{ background-position: 100% 50%; }}
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5em; 
+    font-weight: 700;
+    text-align: center;
+
+    /* ALTIN YANSIMA */
+    color: #FFD700; /* Parlak altın rengi */
+    text-shadow: 
+        0 0 5px rgba(255, 215, 0, 0.7),
+        0 0 10px rgba(255, 215, 0, 0.5),
+        0 0 15px rgba(255, 215, 0, 0.3);
+        
+    background: linear-gradient(45deg, #FFD700, #DAA520, #FFD700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    margin-bottom: -10px;
 }}
 
 /* ---------------- CD ANİMASYONU ---------------- */
@@ -108,16 +107,15 @@ div[data-testid="stTextInputRoot"] > div:first-child {{
 }}
 
 input[type="text"] {{
-  background-color: rgba(240,240,240,0.12) !important;  /* 🔹 hafif gri */
-  border: 2px solid #DAA520 !important;  /* altın kenarlık */
+  background-color: rgba(240,240,240,0.12) !important;
+  border: 2px solid #DAA520 !important;
   border-radius: 10px !important;
   padding: 12px 40px 12px 45px !important;
-  color: #FFD700 !important;  /* altın yazı */
+  color: #FFD700 !important;
   font-size: 18px !important;
   font-family: 'Playfair Display', serif !important;
   font-weight: 500 !important;
   box-shadow: 0 0 10px rgba(218,165,32,0.25);
-  position: relative;
   background-image: url("data:image/png;base64,{cd_base64}");
   background-repeat: no-repeat;
   background-position: 10px center;
@@ -165,6 +163,7 @@ div.stButton > button:hover {{
 }}
 </style>
 """, unsafe_allow_html=True)
+
 
 
 # ---------------- BAŞLIK + CD ----------------
