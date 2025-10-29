@@ -55,7 +55,7 @@ st.markdown(f"""
 /* BAŞLIK */
 .title {{
   text-align: center;
-  font-size: 20px;
+  font-size: 54px;
   font-weight: 700;
   background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
   -webkit-background-clip: text;
@@ -63,7 +63,7 @@ st.markdown(f"""
   text-shadow: 0 0 25px rgba(255, 215, 0, 0.9),
                0 0 40px rgba(255, 170, 0, 0.5);
   animation: fadeInTitle 2s ease-out forwards;
-  margin-bottom: -60px;
+  margin-bottom: 30px;
 }}
 
 @keyframes fadeInTitle {{
