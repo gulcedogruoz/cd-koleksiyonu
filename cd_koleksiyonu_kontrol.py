@@ -63,7 +63,7 @@ st.markdown(f"""
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
   animation: fadeInTitle 2s ease-out forwards;
-  margin-bottom: -10px;   /* CD’ye biraz daha yakın */
+  margin-bottom: -100px;   /* CD’ye biraz daha yakın */
 }}
 
 @keyframes fadeInTitle {{
@@ -76,7 +76,7 @@ st.markdown(f"""
   position: relative;
   width: 100%;
   height: 160px;
-  margin: 10px auto 50px auto; /* 🔽 Aşağı doğru daha fazla boşluk */
+  margin: 100px auto 50px auto; /* 🔽 Aşağı doğru daha fazla boşluk */
   overflow: hidden;
 }}
 
