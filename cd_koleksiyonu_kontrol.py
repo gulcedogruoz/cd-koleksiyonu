@@ -68,6 +68,9 @@ st.markdown(f"""
 st.markdown(f"""
 <style>
 
+st.markdown(f"""
+<style>
+
 /* --- BAŞLIK --- */
 .title {{
   text-align: center;
@@ -162,6 +165,7 @@ st.markdown(f"""
 
 </style>
 """, unsafe_allow_html=True)
+
 
 
 
