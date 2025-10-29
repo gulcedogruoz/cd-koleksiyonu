@@ -153,7 +153,7 @@ if "eslesenler" not in st.session_state:
 st.markdown("<div style='height:160px;'></div>", unsafe_allow_html=True)
 
 # --- BAŞLIK ---
-st.markdown("<h1 class='title'>Tuğgen’in CD Koleksiyonu 💿</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='title'>Tuğgen’in DVD Koleksiyonu 💿</h1>", unsafe_allow_html=True)
 
 # --- LABEL ---
 st.markdown("""
