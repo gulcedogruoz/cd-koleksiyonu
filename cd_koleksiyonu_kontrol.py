@@ -55,7 +55,7 @@ st.markdown(f"""
 /* BAŞLIK */
 .title {{
   text-align: center;
-  font-size: 60px;
+  font-size: 20px;
   font-weight: 700;
   background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
   -webkit-background-clip: text;
