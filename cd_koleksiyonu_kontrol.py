@@ -1,5 +1,4 @@
 import streamlit as st
-from pathlib import Path
 import math
 import base64
 import gspread
@@ -44,190 +43,194 @@ st.markdown(f"""
 
 /* --- GENEL TASARIM --- */
 .stApp {{
-    background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.75)),
-                url("data:image/jpg;base64,{bg_base64}");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: #fff9e6;
-    font-family: 'Poppins', sans-serif;
-    padding-top: 80px !important;
+  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.75)),
+              url("data:image/jpg;base64,{bg_base64}");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #fff9e6;
+  font-family: 'Poppins', sans-serif;
+  padding-top: 80px !important;
+  overflow: hidden;
 }}
 
 /* --- BAŞLIK --- */
 .title {{
-    text-align: center;
-    font-size: 68px;
-    font-weight: 700;
-    background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(255,215,0,0.8);
-    animation: fadeInTitle 2s ease-out forwards;
+  text-align: center;
+  font-size: 68px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+  animation: fadeInTitle 2s ease-out forwards;
 }}
 
 @keyframes fadeInTitle {{
-    0% {{ opacity: 0; transform: translateY(-30px); }}
-    100% {{ opacity: 1; transform: translateY(0); }}
+  0% {{ opacity: 0; transform: translateY(-30px); }}
+  100% {{ opacity: 1; transform: translateY(0); }}
 }}
 
 /* --- SAHNE --- */
 .scene {{
-    position: relative;
-    width: 380px;
-    height: 220px;
-    margin: 40px auto;
+  position: relative;
+  width: 400px;
+  height: 260px;
+  margin: 40px auto;
+  perspective: 800px;
 }}
 
+/* --- CD --- */
 .cd {{
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%) translateY(0) rotate(0deg);
-    width: 120px;
-    height: 120px;
-    background: url("data:image/png;base64,{cd_base64}") no-repeat center/contain;
-    animation: insertCD 5s ease-in-out forwards;
-    z-index: 3;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px) rotate(0deg);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: url("data:image/png;base64,{cd_base64}") no-repeat center/cover;
+  box-shadow: 0 0 30px rgba(255,255,255,0.5);
+  animation: spinAndInsert 6s ease-in-out forwards;
+  z-index: 3;
 }}
 
+@keyframes spinAndInsert {{
+  0% {{
+    transform: translateX(-50%) translateY(80px) rotate(0deg);
+    opacity: 0;
+  }}
+  15% {{
+    opacity: 1;
+  }}
+  50% {{
+    transform: translateX(-50%) translateY(-100px) rotate(720deg);
+  }}
+  80% {{
+    transform: translateX(-50%) translateY(-130px) rotate(1080deg);
+  }}
+  100% {{
+    transform: translateX(-50%) translateY(-160px) rotate(1260deg) scale(0.8);
+    opacity: 0.9;
+  }}
+}}
+
+/* --- DVD PLAYER --- */
 .player {{
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    height: 120px;
-    background: url("data:image/png;base64,{tray_base64}") no-repeat center/contain;
-    z-index: 2;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 140px;
+  background: url("data:image/png;base64,{tray_base64}") no-repeat center/contain;
+  z-index: 1;
 }}
 
-@keyframes insertCD {{
-    0% {{
-        transform: translateX(-50%) translateY(60px) rotate(0deg);
-        opacity: 0;
-    }}
-    20% {{
-        opacity: 1;
-    }}
-    50% {{
-        transform: translateX(-50%) translateY(-80px) rotate(720deg);
-    }}
-    70% {{
-        transform: translateX(-50%) translateY(-110px) rotate(1080deg);
-    }}
-    85% {{
-        transform: translateX(-50%) translateY(-125px) scale(0.95);
-    }}
-    100% {{
-        transform: translateX(-50%) translateY(-135px) scale(0.8);
-        opacity: 0.9;
-    }}
-}}
-
-/* --- TEPSİ KAPANMA ANİMASYONU --- */
+/* --- TRAY KAPANMA VE IŞIK EFEKTİ --- */
 .tray-close {{
-    position: absolute;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 180px;
-    height: 8px;
-    background: #111;
-    border-radius: 3px;
-    animation: trayClose 5s ease-in-out forwards;
+  position: absolute;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 8px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
+  animation: trayLight 6s ease-in-out forwards;
+  filter: blur(3px);
 }}
 
-@keyframes trayClose {{
-    0%, 70% {{
-        width: 180px;
-        opacity: 1;
-    }}
-    100% {{
-        width: 0;
-        opacity: 0.7;
-    }}
+@keyframes trayLight {{
+  0%, 75% {{
+    opacity: 0;
+    width: 180px;
+  }}
+  85% {{
+    opacity: 1;
+    width: 200px;
+  }}
+  100% {{
+    opacity: 0;
+    width: 0;
+  }}
 }}
 
 /* --- ARAMA KUTUSU --- */
 div[data-testid="stTextInputRoot"] > div:first-child {{
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }}
 
 input[type="text"] {{
-    background-color: rgba(255,255,255,0.95) !important;
-    border: 3px solid #ffb84c !important;
-    border-radius: 18px !important;
-    padding: 16px 22px !important;
-    color: #3b2f2f !important;
-    font-size: 20px !important;
-    text-align: center !important;
-    font-weight: 500 !important;
-    box-shadow: 0 0 14px rgba(255,200,100,0.4);
+  background-color: rgba(255,255,255,0.95) !important;
+  border: 3px solid #ffb84c !important;
+  border-radius: 18px !important;
+  padding: 16px 22px !important;
+  color: #3b2f2f !important;
+  font-size: 20px !important;
+  text-align: center !important;
+  font-weight: 500 !important;
+  box-shadow: 0 0 14px rgba(255,200,100,0.4);
 }}
 
 input[type="text"]::placeholder {{
-    color: #6b4a12 !important;
-    opacity: 0.85 !important;
-    font-style: italic;
+  color: #6b4a12 !important;
+  opacity: 0.85 !important;
+  font-style: italic;
 }}
 
 /* --- BUTONLAR --- */
 div.stButton > button:first-child {{
-    background: linear-gradient(135deg, #ffb84c 0%, #ff8800 100%);
-    color: #1b0e0e;
-    font-weight: bold;
-    font-size: 18px;
-    border-radius: 50px;
-    border: none;
-    padding: 10px 25px;
-    margin-top: 10px;
-    box-shadow: 0 0 20px rgba(255,136,0,0.3);
-    transition: all 0.25s ease-in-out;
+  background: linear-gradient(135deg, #ffb84c 0%, #ff8800 100%);
+  color: #1b0e0e;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 50px;
+  border: none;
+  padding: 10px 25px;
+  margin-top: 10px;
+  box-shadow: 0 0 20px rgba(255,136,0,0.3);
+  transition: all 0.25s ease-in-out;
 }}
 div.stButton > button:hover {{
-    background: linear-gradient(135deg, #ffdd91, #ffb84c);
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(255,200,100,0.6);
+  background: linear-gradient(135deg, #ffdd91, #ffb84c);
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255,200,100,0.6);
 }}
 
 /* --- KOLEKSİYON --- */
 .dvd-list {{
-    background: rgba(0, 0, 0, 0.55);
-    padding: 15px 20px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 216, 128, 0.4);
-    margin-top: 10px;
-    box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+  background: rgba(0, 0, 0, 0.55);
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 216, 128, 0.4);
+  margin-top: 10px;
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
 }}
 .dvd-item {{
-    padding: 6px 0;
-    font-size: 17px;
-    border-bottom: 1px dashed rgba(255, 215, 128, 0.2);
+  padding: 6px 0;
+  font-size: 17px;
+  border-bottom: 1px dashed rgba(255, 215, 128, 0.2);
 }}
 .dvd-num {{
-    color: #ffdd91;
-    font-weight: bold;
+  color: #ffdd91;
+  font-weight: bold;
 }}
 .collection-title {{
-    font-size: 28px;
-    color: #ffe6b3;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 20px;
+  font-size: 28px;
+  color: #ffe6b3;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
 }}
-
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- STREAMLIT GÖRSEL ALAN ----------------
+# ---------------- BAŞLIK VE ANİMASYON ----------------
 st.markdown("""
-<div class='title'>
-  Tuğgen’in DVD Koleksiyonu 💿
-</div>
-
+<div class='title'>Tuğgen’in DVD Koleksiyonu 💿</div>
 <div class='scene'>
   <div class='player'></div>
   <div class='cd'></div>
@@ -265,7 +268,7 @@ if st.button("DVD Ara"):
             st.session_state.eslesenler = []
             st.session_state.arama_sonucu = ("Bu DVD yok al hemen go go go!!!", "error")
 
-# --- SONUÇLAR ---
+# --- SONUÇ GÖRÜNÜMÜ ---
 if st.session_state.arama_sonucu:
     msg, status = st.session_state.arama_sonucu
 
