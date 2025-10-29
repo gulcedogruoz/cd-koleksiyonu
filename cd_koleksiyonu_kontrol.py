@@ -84,7 +84,7 @@ st.markdown(f"""
 
 .cd {{
   position: absolute;
-  bottom: 10px;
+  bottom: 80px;
   left: -150px;
   width: 90px;
   height: 90px;
