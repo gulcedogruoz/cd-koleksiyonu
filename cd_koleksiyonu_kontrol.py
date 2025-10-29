@@ -19,14 +19,14 @@ def get_dvd_list():
 
 dvd_list = get_dvd_list()
 
-# ---------------- SAYFA AYARLARI ----------------
+# ---------------- SAYFA ----------------
 st.set_page_config(
     page_title="Tuğgen'in DVD Koleksiyonu",
     page_icon="💿",
     layout="centered"
 )
 
-# ---------------- GÖRSELLERİ BASE64’E ÇEVİR ----------------
+# ---------------- GÖRSELLER ----------------
 def get_base64_image(image_path):
     with open(image_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
@@ -37,37 +37,39 @@ cd_base64 = get_base64_image("cd_disk.png")
 # ---------------- CSS ----------------
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@1,600&display=swap');
 
 /* GENEL */
 .stApp {{
-  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.75)),
+  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.75)),
               url("data:image/jpg;base64,{bg_base64}");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   color: #fff9e6;
-  font-family: 'Cinzel Decorative', serif;
-  padding-top: 220px !important;  /* 🔽 başlık aşağı kayıyor */
+  font-family: 'Playfair Display SC', serif;
+  padding-top: 200px !important;  /* 🔽 yüz görünür */
   overflow: hidden;
 }}
 
 /* BAŞLIK */
 .title {{
   text-align: center;
-  font-size: 54px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
+  font-size: 58px;
+  font-weight: 600;
+  font-style: italic;
+  background: linear-gradient(90deg, #fff3c4, #ffd27f, #ffb84c, #ffe7b2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 25px rgba(255, 215, 0, 0.9),
-               0 0 40px rgba(255, 170, 0, 0.5);
+  text-shadow: 0 0 18px rgba(255, 220, 150, 0.8),
+               0 0 32px rgba(255, 180, 70, 0.4);
   animation: fadeInTitle 2s ease-out forwards;
-  margin-bottom: 30px;
+  margin-bottom: -100px;
+  letter-spacing: 1px;
 }}
 
 @keyframes fadeInTitle {{
-  0% {{ opacity: 0; transform: translateY(-20px); }}
+  0% {{ opacity: 0; transform: translateY(-15px); }}
   100% {{ opacity: 1; transform: translateY(0); }}
 }}
 
@@ -89,7 +91,7 @@ st.markdown(f"""
   border-radius: 50%;
   background: url("data:image/png;base64,{cd_base64}") no-repeat center/cover;
   animation: rollAcross 8s linear infinite;
-  box-shadow: 0 0 20px rgba(255,255,255,0.5);
+  box-shadow: 0 0 16px rgba(255,255,255,0.4);
   z-index: 3;
 }}
 
@@ -126,21 +128,21 @@ input[type="text"]::placeholder {{
 
 /* BUTONLAR */
 div.stButton > button:first-child {{
-  background: linear-gradient(135deg, #ffb84c 0%, #ff8800 100%);
-  color: #1b0e0e;
+  background: linear-gradient(135deg, #ffcc80 0%, #ffb84c 100%);
+  color: #2e1b0e;
   font-weight: bold;
   font-size: 17px;
   border-radius: 40px;
   border: none;
   padding: 8px 22px;
   margin-top: 6px;
-  box-shadow: 0 0 18px rgba(255,136,0,0.3);
+  box-shadow: 0 0 18px rgba(255,170,50,0.3);
   transition: all 0.25s ease-in-out;
 }}
 div.stButton > button:hover {{
-  background: linear-gradient(135deg, #ffdd91, #ffb84c);
+  background: linear-gradient(135deg, #ffe4b3, #ffc980);
   transform: scale(1.05);
-  box-shadow: 0 0 22px rgba(255,200,100,0.6);
+  box-shadow: 0 0 25px rgba(255,200,100,0.6);
 }}
 
 /* KOLEKSİYON LİSTESİ */
