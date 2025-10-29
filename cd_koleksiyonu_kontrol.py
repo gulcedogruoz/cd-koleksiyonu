@@ -5,12 +5,11 @@ import gspread
 from google.oauth2.service_account import Credentials
 import json
 
-# ---------------- GOOGLE SHEETS BAĞLANTISI ----------------
+# ---------------- GOOGLE SHEETS ----------------
 SCOPE = ["https://www.googleapis.com/auth/spreadsheets"]
 service_account_info = json.loads(st.secrets["google"]["credentials"])
 CREDS = Credentials.from_service_account_info(service_account_info, scopes=SCOPE)
 client = gspread.authorize(CREDS)
-
 SHEET_ID = "1BdB5_Bu_JFbCEy1ZYB3Dn1JCnCRqNaa7ncsdmGPMyNA"
 sheet = client.open_by_key(SHEET_ID).sheet1
 
@@ -20,14 +19,14 @@ def get_dvd_list():
 
 dvd_list = get_dvd_list()
 
-# ---------------- SAYFA YAPILANDIRMASI ----------------
+# ---------------- SAYFA AYARLARI ----------------
 st.set_page_config(
     page_title="Tuğgen'in DVD Koleksiyonu",
     page_icon="💿",
     layout="centered"
 )
 
-# ---------------- GÖRSELLERİ BASE64’E ÇEVİRME ----------------
+# ---------------- GÖRSELLERİ BASE64’E ÇEVİR ----------------
 def get_base64_image(image_path):
     with open(image_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
@@ -35,12 +34,12 @@ def get_base64_image(image_path):
 bg_base64 = get_base64_image("arka_plan.JPG")
 cd_base64 = get_base64_image("cd_disk.png")
 
-# ---------------- CSS TASARIM ----------------
+# ---------------- CSS ----------------
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
 
-/* --- GENEL TASARIM --- */
+/* GENEL */
 .stApp {{
   background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.75)),
               url("data:image/jpg;base64,{bg_base64}");
@@ -48,22 +47,23 @@ st.markdown(f"""
   background-position: center;
   background-attachment: fixed;
   color: #fff9e6;
-  font-family: 'Poppins', sans-serif;
-  padding-top: 180px !important;   /* 🔽 ANA DÜZENİ AŞAĞI ÇEKİYORUZ */
+  font-family: 'Cinzel Decorative', serif;
+  padding-top: 220px !important;  /* 🔽 başlık aşağı kayıyor */
   overflow: hidden;
 }}
 
-/* --- BAŞLIK --- */
+/* BAŞLIK */
 .title {{
   text-align: center;
-  font-size: 54px;
+  font-size: 60px;
   font-weight: 700;
   background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.9),
+               0 0 40px rgba(255, 170, 0, 0.5);
   animation: fadeInTitle 2s ease-out forwards;
-  margin-bottom: -100px;   /* CD’ye biraz daha yakın */
+  margin-bottom: -60px;
 }}
 
 @keyframes fadeInTitle {{
@@ -71,20 +71,19 @@ st.markdown(f"""
   100% {{ opacity: 1; transform: translateY(0); }}
 }}
 
-/* --- SAHNE --- */
+/* CD ANİMASYONU */
 .scene {{
   position: relative;
   width: 100%;
   height: 160px;
-  margin: 100px auto 50px auto; /* 🔽 Aşağı doğru daha fazla boşluk */
+  margin: 70px auto 30px auto;
   overflow: hidden;
 }}
 
-/* --- CD YUVARLANMA ANİMASYONU --- */
 .cd {{
   position: absolute;
   bottom: 10px;
-  left: -120px;
+  left: -150px;
   width: 90px;
   height: 90px;
   border-radius: 50%;
@@ -95,27 +94,12 @@ st.markdown(f"""
 }}
 
 @keyframes rollAcross {{
-  0% {{
-    left: -150px;
-    transform: rotate(0deg) translateY(0);
-  }}
-  25% {{
-    transform: rotate(360deg) translateY(-8px);
-  }}
-  50% {{
-    left: 50%;
-    transform: rotate(720deg) translateY(0);
-  }}
-  75% {{
-    transform: rotate(1080deg) translateY(-8px);
-  }}
-  100% {{
-    left: 110%;
-    transform: rotate(1440deg) translateY(0);
-  }}
+  0% {{ left: -150px; transform: rotate(0deg); }}
+  50% {{ left: 50%; transform: rotate(720deg); }}
+  100% {{ left: 110%; transform: rotate(1440deg); }}
 }}
 
-/* --- ARAMA KUTUSU --- */
+/* ARAMA KUTUSU */
 div[data-testid="stTextInputRoot"] > div:first-child {{
   background: transparent !important;
   box-shadow: none !important;
@@ -140,7 +124,7 @@ input[type="text"]::placeholder {{
   font-style: italic;
 }}
 
-/* --- BUTONLAR --- */
+/* BUTONLAR */
 div.stButton > button:first-child {{
   background: linear-gradient(135deg, #ffb84c 0%, #ff8800 100%);
   color: #1b0e0e;
@@ -159,7 +143,7 @@ div.stButton > button:hover {{
   box-shadow: 0 0 22px rgba(255,200,100,0.6);
 }}
 
-/* --- KOLEKSİYON --- */
+/* KOLEKSİYON LİSTESİ */
 .dvd-list {{
   background: rgba(0, 0, 0, 0.55);
   padding: 15px 20px;
@@ -187,14 +171,10 @@ div.stButton > button:hover {{
 </style>
 """, unsafe_allow_html=True)
 
-
-
-# ---------------- BAŞLIK VE SAHNE ----------------
+# ---------------- BAŞLIK + CD ----------------
 st.markdown("""
-<div class='title'>Tuğgen’in DVD Koleksiyonu </div>
-<div class='scene'>
-  <div class='cd'></div>
-</div>
+<div class='title'>Tuğgen’in DVD Koleksiyonu 💿</div>
+<div class='scene'><div class='cd'></div></div>
 """, unsafe_allow_html=True)
 
 # ---------------- STREAMLIT MANTIK ----------------
@@ -209,7 +189,6 @@ if "eslesenler" not in st.session_state:
 
 query = st.text_input("")
 
-# --- ARAMA BUTONU ---
 if st.button("DVD Ara"):
     if not query.strip():
         st.warning("DVD ismi girsene slk krdsm!!!")
@@ -227,10 +206,8 @@ if st.button("DVD Ara"):
             st.session_state.eslesenler = []
             st.session_state.arama_sonucu = ("Bu DVD yok al hemen go go go!!!", "error")
 
-# --- SONUÇ GÖRÜNÜMÜ ---
 if st.session_state.arama_sonucu:
     msg, status = st.session_state.arama_sonucu
-
     if st.session_state.dvd_yok:
         st.error(msg)
         if st.button("Koleksiyona Ekle ➕"):
@@ -258,7 +235,6 @@ if st.session_state.arama_sonucu:
                             st.rerun()
         st.markdown("</div>", unsafe_allow_html=True)
 
-# --- TÜM KOLEKSİYONU GÖSTER BUTONU ---
 if st.button("Tüm Koleksiyonu Göster"):
     if dvd_list:
         sorted_dvds = sorted(dvd_list, key=lambda x: x.lower())
@@ -276,13 +252,3 @@ if st.button("Tüm Koleksiyonu Göster"):
             for i, dvd in enumerate(sorted_dvds[midpoint:], midpoint + 1):
                 st.markdown(f"<div class='dvd-item'><span class='dvd-num'>{i}.</span> {dvd}</div>", unsafe_allow_html=True)
             st.markdown("</div>", unsafe_allow_html=True)
-
-# --- SAYFAYI AŞAĞI KAYDIRMA (YÜZÜ GÖSTERMEK İÇİN) ---
-st.markdown("""
-<style>
-/* Streamlit bazen CSS'i erken uygular, bu nedenle burada yeniden tanımlıyoruz */
-html, body, .stApp {
-    padding-top: 260px !important;   /* 🔽 bunu arttırarak yüzü görünür yap */
-}
-</style>
-""", unsafe_allow_html=True)
