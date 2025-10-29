@@ -276,3 +276,13 @@ if st.button("Tüm Koleksiyonu Göster"):
             for i, dvd in enumerate(sorted_dvds[midpoint:], midpoint + 1):
                 st.markdown(f"<div class='dvd-item'><span class='dvd-num'>{i}.</span> {dvd}</div>", unsafe_allow_html=True)
             st.markdown("</div>", unsafe_allow_html=True)
+
+# --- SAYFAYI AŞAĞI KAYDIRMA (YÜZÜ GÖSTERMEK İÇİN) ---
+st.markdown("""
+<style>
+/* Streamlit bazen CSS'i erken uygular, bu nedenle burada yeniden tanımlıyoruz */
+html, body, .stApp {
+    padding-top: 260px !important;   /* 🔽 bunu arttırarak yüzü görünür yap */
+}
+</style>
+""", unsafe_allow_html=True)
