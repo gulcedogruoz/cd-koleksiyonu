@@ -36,6 +36,18 @@ def get_base64_image(image_path):
 
 image_base64 = get_base64_image("arka_plan.JPG")
 
+import base64
+
+# --- GÖRSELLERİ BASE64’E ÇEVİRME ---
+def get_base64_image(image_path):
+    with open(image_path, "rb") as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+cd_image_base64 = get_base64_image("cd_disk.png")
+tray_image_base64 = get_base64_image("dvd_tray.png")
+
+
 # ---------------- CSS TASARIM ----------------
 st.markdown(f"""
 <style>
