@@ -65,6 +65,9 @@ st.markdown(f"""
     overflow-x: hidden;
     padding-top: 100px !important;
 }}
+st.markdown(f"""
+<style>
+
 /* --- BAŞLIK --- */
 .title {{
   text-align: center;
@@ -90,7 +93,7 @@ st.markdown(f"""
   }}
 }}
 
-/* --- SAHNE: GERÇEK GÖRSELLERLE CD + TRAY --- */
+/* --- SAHNE --- */
 .scene {{
   position: relative;
   width: 400px;
@@ -106,7 +109,7 @@ st.markdown(f"""
   transform: translateX(-50%) translateY(0) rotate(0deg);
   width: 120px;
   height: 120px;
-  background: url('cd_disk.png') no-repeat center/contain;
+  background: url("data:image/png;base64,{cd_image_base64}") no-repeat center/contain;
   animation: liftAndInsert 5s ease-in-out forwards;
   z-index: 3;
 }}
@@ -118,7 +121,7 @@ st.markdown(f"""
   transform: translateX(-50%);
   width: 300px;
   height: 120px;
-  background: url('dvd_tray.png') no-repeat center/contain;
+  background: url("data:image/png;base64,{tray_image_base64}") no-repeat center/contain;
   background-size: contain;
   z-index: 1;
   animation: trayClose 5s ease-in-out forwards;
@@ -156,6 +159,10 @@ st.markdown(f"""
     opacity: 0.7;
   }}
 }}
+
+</style>
+""", unsafe_allow_html=True)
+
 
 
 
