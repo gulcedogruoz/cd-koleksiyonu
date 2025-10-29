@@ -64,7 +64,7 @@ st.markdown(f"""
   text-shadow: 0 0 18px rgba(255, 220, 150, 0.8),
                0 0 32px rgba(255, 180, 70, 0.4);
   animation: fadeInTitle 2s ease-out forwards;
-  margin-bottom: -10px;
+  margin-bottom: -20px;
   letter-spacing: 1px;
 }}
 
@@ -77,14 +77,14 @@ st.markdown(f"""
 .scene {{
   position: relative;
   width: 100%;
-  height: 160px;
-  margin: 70px auto 30px auto;
+  height: 120px;
+  margin: 10px auto 5px auto;
   overflow: hidden;
 }}
 
 .cd {{
   position: absolute;
-  bottom: 80px;
+  bottom: 10px;
   left: -150px;
   width: 90px;
   height: 90px;
