@@ -78,7 +78,7 @@ st.markdown(f"""
   }}
 }}
 
-/* --- SAHNE: DVD PLAYER + CD --- */
+/* --- SAHNE: GERÇEK GÖRSELLERLE CD + TRAY --- */
 .scene {{
   position: relative;
   width: 400px;
@@ -92,52 +92,24 @@ st.markdown(f"""
   bottom: 0;
   left: 50%;
   transform: translateX(-50%) translateY(0) rotate(0deg);
-  width: 100px;
-  height: 100px;
-  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #bdbdbd 25%, #777 70%, #444 100%);
-  border-radius: 50%;
-  box-shadow: 0 0 20px rgba(255,255,255,0.7);
+  width: 120px;
+  height: 120px;
+  background: url('cd_disk.png') no-repeat center/contain;
   animation: liftAndInsert 5s ease-in-out forwards;
   z-index: 3;
 }}
 
-.cd::before {{
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 18px;
-  background: #111;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}}
-
 .player {{
   position: absolute;
-  bottom: 40px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
-  width: 260px;
-  height: 60px;
-  background: linear-gradient(180deg, #1c1c1c, #000);
-  border: 2px solid #333;
-  border-radius: 6px;
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.05), 0 0 20px rgba(255,255,255,0.1);
-}}
-
-.tray {{
-  position: absolute;
-  bottom: 65px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 160px;
-  height: 12px;
-  background: linear-gradient(180deg, #2b2b2b, #111);
-  border: 1px solid #444;
-  border-radius: 4px;
+  width: 300px;
+  height: 120px;
+  background: url('dvd_tray.png') no-repeat center/contain;
+  background-size: contain;
+  z-index: 1;
   animation: trayClose 5s ease-in-out forwards;
-  transform-origin: center;
 }}
 
 @keyframes liftAndInsert {{
@@ -152,22 +124,27 @@ st.markdown(f"""
     transform: translateX(-50%) translateY(-120px) rotate(720deg);
   }}
   70% {{
-    transform: translateX(-50%) translateY(-130px) scale(0.95);
+    transform: translateX(-50%) translateY(-140px) rotate(900deg);
+  }}
+  85% {{
+    transform: translateX(-50%) translateY(-150px) scale(0.95);
   }}
   100% {{
-    transform: translateX(-50%) translateY(-140px) scale(0.8);
+    transform: translateX(-50%) translateY(-160px) scale(0.8);
     opacity: 0.8;
   }}
 }}
 
 @keyframes trayClose {{
   0%, 70% {{
-    width: 160px;
+    transform: translateX(-50%) scaleX(1);
   }}
   100% {{
-    width: 0;
+    transform: translateX(-50%) scaleX(0.3);
+    opacity: 0.7;
   }}
 }}
+
 
 
 
@@ -276,10 +253,10 @@ st.markdown("""
 
 <div class='scene'>
   <div class='player'></div>
-  <div class='tray'></div>
   <div class='cd'></div>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
