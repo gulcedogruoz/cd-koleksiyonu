@@ -48,7 +48,7 @@ st.markdown(f"""
   background-attachment: fixed;
   color: #fff9e6;
   font-family: 'Playfair Display SC', serif;
-  padding-top: 200px !important;  /* 🔽 yüz görünür */
+  padding-top: -10px !important;  /* 🔽 yüz görünür */
   overflow: hidden;
 }}
 
