@@ -23,7 +23,7 @@ cd_list = get_cd_list()
 
 # ---------------- SAYFA YAPILANDIRMASI ----------------
 st.set_page_config(
-    page_title="Tuğgen'in CD Koleksiyonu",
+    page_title="Tuğgen'in DVD Koleksiyonu",
     page_icon="💿",
     layout="centered"
 )
