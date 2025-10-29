@@ -55,21 +55,16 @@ st.markdown(f"""
 }}
 /* --- BAŞLIK --- */
 .title {{
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
+  text-align: center;
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
   font-size: 68px;
-  letter-spacing: 2px;
-  background: linear-gradient(90deg, #fff8d6, #ffcc00, #ffb84c, #fff6b0);
+  background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 18px rgba(255, 215, 0, 0.7);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
   animation: fadeInTitle 2s ease-out forwards;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }}
 
 @keyframes fadeInTitle {{
@@ -83,25 +78,26 @@ st.markdown(f"""
   }}
 }}
 
-/* --- SAHNE: CD + KUTU --- */
+/* --- SAHNE: DVD PLAYER + CD --- */
 .scene {{
   position: relative;
-  width: 200px;
-  height: 150px;
-  display: inline-block;
+  width: 400px;
+  height: 250px;
+  margin: 0 auto;
+  margin-top: 40px;
 }}
 
 .cd {{
   position: absolute;
-  left: -120px;
-  top: 50%;
-  width: 80px;
-  height: 80px;
-  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #bdbdbd 25%, #666 70%, #444 100%);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(0) rotate(0deg);
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #bdbdbd 25%, #777 70%, #444 100%);
   border-radius: 50%;
-  box-shadow: 0 0 15px rgba(255,255,255,0.7);
-  transform-origin: center;
-  animation: rollToCase 3s ease-out forwards;
+  box-shadow: 0 0 20px rgba(255,255,255,0.7);
+  animation: liftAndInsert 5s ease-in-out forwards;
   z-index: 3;
 }}
 
@@ -117,72 +113,59 @@ st.markdown(f"""
   transform: translate(-50%, -50%);
 }}
 
-/* --- DVD KUTUSU --- */
-.case {{
+.player {{
   position: absolute;
-  left: 100px;
-  top: 25%;
-  width: 80px;
-  height: 100px;
-  background: linear-gradient(145deg, #202020, #1a1a1a);
-  border: 2px solid #444;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 60px;
+  background: linear-gradient(180deg, #1c1c1c, #000);
+  border: 2px solid #333;
+  border-radius: 6px;
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.05), 0 0 20px rgba(255,255,255,0.1);
+}}
+
+.tray {{
+  position: absolute;
+  bottom: 65px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 12px;
+  background: linear-gradient(180deg, #2b2b2b, #111);
+  border: 1px solid #444;
   border-radius: 4px;
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
-  overflow: hidden;
-  transform-origin: left center;
-  z-index: 2;
+  animation: trayClose 5s ease-in-out forwards;
+  transform-origin: center;
 }}
 
-.case::before {{
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(0,0,0,0.4));
-}}
-
-.case::after {{
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -2px;
-  width: 8px;
-  height: 100%;
-  background: #111;
-  transform-origin: right center;
-  animation: closeCase 3s ease-in-out forwards;
-  animation-delay: 2.5s;
-}}
-
-/* --- ANİMASYONLAR --- */
-@keyframes rollToCase {{
+@keyframes liftAndInsert {{
   0% {{
-    transform: translateX(0) rotate(0deg);
+    transform: translateX(-50%) translateY(0) rotate(0deg);
     opacity: 0;
   }}
-  20% {{
+  10% {{
     opacity: 1;
   }}
-  70% {{
-    transform: translateX(180px) rotate(720deg);
+  50% {{
+    transform: translateX(-50%) translateY(-120px) rotate(720deg);
   }}
-  90% {{
-    transform: translateX(190px) scale(0.9);
+  70% {{
+    transform: translateX(-50%) translateY(-130px) scale(0.95);
   }}
   100% {{
-    transform: translateX(190px) scale(0.8);
+    transform: translateX(-50%) translateY(-140px) scale(0.8);
     opacity: 0.8;
   }}
 }}
 
-@keyframes closeCase {{
-  0% {{
-    transform: rotateY(0deg);
+@keyframes trayClose {{
+  0%, 70% {{
+    width: 160px;
   }}
   100% {{
-    transform: rotateY(-110deg);
+    width: 0;
   }}
 }}
 
@@ -288,13 +271,16 @@ st.markdown("<div style='height:160px;'></div>", unsafe_allow_html=True)
 
 st.markdown("""
 <div class='title'>
-  Tuğgen’in DVD Koleksiyonu
-  <div class='scene'>
-    <div class='cd'></div>
-    <div class='case'></div>
-  </div>
+  Tuğgen’in DVD Koleksiyonu 💿
+</div>
+
+<div class='scene'>
+  <div class='player'></div>
+  <div class='tray'></div>
+  <div class='cd'></div>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
