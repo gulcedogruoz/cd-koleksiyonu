@@ -49,24 +49,25 @@ st.markdown(f"""
   background-attachment: fixed;
   color: #fff9e6;
   font-family: 'Poppins', sans-serif;
-  padding-top: 80px !important;
+  padding-top: 30px !important;   /* daha yukarı */
   overflow: hidden;
 }}
 
 /* --- BAŞLIK --- */
 .title {{
   text-align: center;
-  font-size: 68px;
+  font-size: 54px;    /* küçültüldü */
   font-weight: 700;
   background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 25px rgba(255, 215, 0, 0.9);
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
   animation: fadeInTitle 2s ease-out forwards;
+  margin-bottom: 10px;   /* yazı ile cd arası daraltıldı */
 }}
 
 @keyframes fadeInTitle {{
-  0% {{ opacity: 0; transform: translateY(-30px); }}
+  0% {{ opacity: 0; transform: translateY(-20px); }}
   100% {{ opacity: 1; transform: translateY(0); }}
 }}
 
@@ -74,22 +75,22 @@ st.markdown(f"""
 .scene {{
   position: relative;
   width: 100%;
-  height: 220px;
-  margin: 40px auto;
+  height: 160px;   /* sahne alanı kısaldı */
+  margin: 20px auto;
   overflow: hidden;
 }}
 
 /* --- CD YUVARLANMA ANİMASYONU --- */
 .cd {{
   position: absolute;
-  bottom: 20px;
-  left: -150px;
-  width: 120px;
-  height: 120px;
+  bottom: 10px;
+  left: -120px;
+  width: 90px;     /* cd küçültüldü */
+  height: 90px;
   border-radius: 50%;
   background: url("data:image/png;base64,{cd_base64}") no-repeat center/cover;
   animation: rollAcross 8s linear infinite;
-  box-shadow: 0 0 25px rgba(255,255,255,0.5);
+  box-shadow: 0 0 20px rgba(255,255,255,0.5);
   z-index: 3;
 }}
 
@@ -99,14 +100,14 @@ st.markdown(f"""
     transform: rotate(0deg) translateY(0);
   }}
   25% {{
-    transform: rotate(360deg) translateY(-10px);
+    transform: rotate(360deg) translateY(-8px);
   }}
   50% {{
     left: 50%;
     transform: rotate(720deg) translateY(0);
   }}
   75% {{
-    transform: rotate(1080deg) translateY(-10px);
+    transform: rotate(1080deg) translateY(-8px);
   }}
   100% {{
     left: 110%;
@@ -125,12 +126,12 @@ input[type="text"] {{
   background-color: rgba(255,255,255,0.95) !important;
   border: 3px solid #ffb84c !important;
   border-radius: 18px !important;
-  padding: 16px 22px !important;
+  padding: 14px 20px !important;
   color: #3b2f2f !important;
-  font-size: 20px !important;
+  font-size: 18px !important;
   text-align: center !important;
   font-weight: 500 !important;
-  box-shadow: 0 0 14px rgba(255,200,100,0.4);
+  box-shadow: 0 0 12px rgba(255,200,100,0.4);
 }}
 
 input[type="text"]::placeholder {{
@@ -144,18 +145,18 @@ div.stButton > button:first-child {{
   background: linear-gradient(135deg, #ffb84c 0%, #ff8800 100%);
   color: #1b0e0e;
   font-weight: bold;
-  font-size: 18px;
-  border-radius: 50px;
+  font-size: 17px;
+  border-radius: 40px;
   border: none;
-  padding: 10px 25px;
-  margin-top: 10px;
-  box-shadow: 0 0 20px rgba(255,136,0,0.3);
+  padding: 8px 22px;
+  margin-top: 6px;
+  box-shadow: 0 0 18px rgba(255,136,0,0.3);
   transition: all 0.25s ease-in-out;
 }}
 div.stButton > button:hover {{
   background: linear-gradient(135deg, #ffdd91, #ffb84c);
   transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255,200,100,0.6);
+  box-shadow: 0 0 22px rgba(255,200,100,0.6);
 }}
 
 /* --- KOLEKSİYON --- */
@@ -168,8 +169,8 @@ div.stButton > button:hover {{
   box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
 }}
 .dvd-item {{
-  padding: 6px 0;
-  font-size: 17px;
+  padding: 5px 0;
+  font-size: 16px;
   border-bottom: 1px dashed rgba(255, 215, 128, 0.2);
 }}
 .dvd-num {{
@@ -177,14 +178,15 @@ div.stButton > button:hover {{
   font-weight: bold;
 }}
 .collection-title {{
-  font-size: 28px;
+  font-size: 24px;
   color: #ffe6b3;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }}
 </style>
 """, unsafe_allow_html=True)
+
 
 # ---------------- BAŞLIK VE SAHNE ----------------
 st.markdown("""
