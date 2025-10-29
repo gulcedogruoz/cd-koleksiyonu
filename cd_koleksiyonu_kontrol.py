@@ -49,21 +49,21 @@ st.markdown(f"""
   background-attachment: fixed;
   color: #fff9e6;
   font-family: 'Poppins', sans-serif;
-  padding-top: 30px !important;   /* daha yukarı */
+  padding-top: 180px !important;   /* 🔽 ANA DÜZENİ AŞAĞI ÇEKİYORUZ */
   overflow: hidden;
 }}
 
 /* --- BAŞLIK --- */
 .title {{
   text-align: center;
-  font-size: 54px;    /* küçültüldü */
+  font-size: 54px;
   font-weight: 700;
   background: linear-gradient(90deg, #fff8d6, #ffd700, #ffb84c, #fff6b0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
   animation: fadeInTitle 2s ease-out forwards;
-  margin-bottom: -20px;   /* yazı ile cd arası daraltıldı */
+  margin-bottom: -10px;   /* CD’ye biraz daha yakın */
 }}
 
 @keyframes fadeInTitle {{
@@ -75,8 +75,8 @@ st.markdown(f"""
 .scene {{
   position: relative;
   width: 100%;
-  height: 160px;   /* sahne alanı kısaldı */
-  margin: 20px auto;
+  height: 160px;
+  margin: 10px auto 50px auto; /* 🔽 Aşağı doğru daha fazla boşluk */
   overflow: hidden;
 }}
 
@@ -85,7 +85,7 @@ st.markdown(f"""
   position: absolute;
   bottom: 10px;
   left: -120px;
-  width: 90px;     /* cd küçültüldü */
+  width: 90px;
   height: 90px;
   border-radius: 50%;
   background: url("data:image/png;base64,{cd_base64}") no-repeat center/cover;
@@ -186,6 +186,7 @@ div.stButton > button:hover {{
 }}
 </style>
 """, unsafe_allow_html=True)
+
 
 
 # ---------------- BAŞLIK VE SAHNE ----------------
