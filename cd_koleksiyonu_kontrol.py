@@ -177,7 +177,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- GİRİŞ ALANI ---
-query = st.text_input("", placeholder="örnek: Matrix, Titanic, Harry Potter...")
+query = st.text_input("")
 
 # --- ARAMA BUTONU ---
 if st.button("DVD Ara"):
