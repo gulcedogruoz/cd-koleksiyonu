@@ -53,62 +53,111 @@ st.markdown(f"""
     overflow-x: hidden;
     padding-top: 100px !important;
 }}
-
-/* --- BAŞLIK (GOLD + CD ANİMASYONLU) --- */ 
+/* --- BAŞLIK --- */
 .title {{
   position: relative;
-  display: inline-block;
-  text-align: center;
-  font-family: 'Cinzel Decorative', cursive;
-  font-size: 72px;
-  background: linear-gradient(90deg, #fff8c9, #ffd700, #ffb600, #fff9e6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 68px;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #fff8d6, #ffcc00, #ffb84c, #fff6b0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 25px rgba(255, 215, 0, 0.9),
-               0 0 50px rgba(255, 200, 50, 0.6),
-               0 0 80px rgba(255, 160, 0, 0.4);
-  margin-bottom: 30px;
+  text-shadow: 0 0 18px rgba(255, 215, 0, 0.7);
   animation: fadeInTitle 2s ease-out forwards;
+  margin-bottom: 60px;
 }}
 
 @keyframes fadeInTitle {{
-  0% {{
+  from {{
     opacity: 0;
-    transform: translateY(-25px);
+    transform: translateY(-30px);
   }}
-  100% {{
+  to {{
     opacity: 1;
     transform: translateY(0);
   }}
 }}
 
-/* --- CD ANİMASYONU --- */
+/* --- SAHNE: CD + KUTU --- */
+.scene {{
+  position: relative;
+  width: 200px;
+  height: 150px;
+  display: inline-block;
+}}
+
 .cd {{
   position: absolute;
-  left: -140px;
+  left: -120px;
   top: 50%;
-  width: 85px;
-  height: 85px;
-  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #bbb 30%, #666 70%, #444 100%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #bdbdbd 25%, #666 70%, #444 100%);
   border-radius: 50%;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
-  animation: rollCD 3s ease-out forwards;
+  box-shadow: 0 0 15px rgba(255,255,255,0.7);
   transform-origin: center;
+  animation: rollToCase 3s ease-out forwards;
+  z-index: 3;
 }}
 
 .cd::before {{
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   width: 18px;
   height: 18px;
-  background: #222;
+  background: #111;
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }}
 
-@keyframes rollCD {{
+/* --- DVD KUTUSU --- */
+.case {{
+  position: absolute;
+  left: 100px;
+  top: 25%;
+  width: 80px;
+  height: 100px;
+  background: linear-gradient(145deg, #202020, #1a1a1a);
+  border: 2px solid #444;
+  border-radius: 4px;
+  box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
+  overflow: hidden;
+  transform-origin: left center;
+  z-index: 2;
+}}
+
+.case::before {{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(0,0,0,0.4));
+}}
+
+.case::after {{
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -2px;
+  width: 8px;
+  height: 100%;
+  background: #111;
+  transform-origin: right center;
+  animation: closeCase 3s ease-in-out forwards;
+  animation-delay: 2.5s;
+}}
+
+/* --- ANİMASYONLAR --- */
+@keyframes rollToCase {{
   0% {{
     transform: translateX(0) rotate(0deg);
     opacity: 0;
@@ -116,9 +165,24 @@ st.markdown(f"""
   20% {{
     opacity: 1;
   }}
+  70% {{
+    transform: translateX(180px) rotate(720deg);
+  }}
+  90% {{
+    transform: translateX(190px) scale(0.9);
+  }}
   100% {{
-    transform: translateX(230px) rotate(720deg);
-    opacity: 1;
+    transform: translateX(190px) scale(0.8);
+    opacity: 0.8;
+  }}
+}}
+
+@keyframes closeCase {{
+  0% {{
+    transform: rotateY(0deg);
+  }}
+  100% {{
+    transform: rotateY(-110deg);
   }}
 }}
 
@@ -224,10 +288,14 @@ st.markdown("<div style='height:160px;'></div>", unsafe_allow_html=True)
 
 st.markdown("""
 <div class='title'>
-  <div class='cd'></div>
-  Tuğgen’in DVD Koleksiyonu 💿
+  Tuğgen’in DVD Koleksiyonu
+  <div class='scene'>
+    <div class='cd'></div>
+    <div class='case'></div>
+  </div>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 
