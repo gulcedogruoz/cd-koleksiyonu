@@ -165,16 +165,6 @@ st.markdown("<div style='height:160px;'></div>", unsafe_allow_html=True)
 # --- BAŞLIK ---
 st.markdown("<h1 class='title'>Tuğgen’in DVD Koleksiyonu 💿</h1>", unsafe_allow_html=True)
 
-# --- LABEL ---
-st.markdown("""
-<div style='text-align:left; margin-left:10px; margin-top:0px; margin-bottom:-200px;'>
-    <label style='font-size:20px; font-weight:700; color:#ffec9e;
-    text-shadow:0 0 6px rgba(255,230,150,0.6);
-    letter-spacing:0.3px; display:block;'>
-        DVD ismini gir:
-    </label>
-</div>
-""", unsafe_allow_html=True)
 
 # --- GİRİŞ ALANI ---
 query = st.text_input("")
