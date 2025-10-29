@@ -34,7 +34,6 @@ def get_base64_image(image_path):
 
 bg_base64 = get_base64_image("arka_plan.JPG")
 cd_base64 = get_base64_image("cd_disk.png")
-tray_base64 = get_base64_image("dvd_tray.png")
 
 # ---------------- CSS TASARIM ----------------
 st.markdown(f"""
@@ -74,85 +73,44 @@ st.markdown(f"""
 /* --- SAHNE --- */
 .scene {{
   position: relative;
-  width: 400px;
-  height: 260px;
+  width: 100%;
+  height: 220px;
   margin: 40px auto;
-  perspective: 800px;
+  overflow: hidden;
 }}
 
-/* --- CD --- */
+/* --- CD YUVARLANMA ANİMASYONU --- */
 .cd {{
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(80px) rotate(0deg);
+  bottom: 20px;
+  left: -150px;
   width: 120px;
   height: 120px;
   border-radius: 50%;
   background: url("data:image/png;base64,{cd_base64}") no-repeat center/cover;
-  box-shadow: 0 0 30px rgba(255,255,255,0.5);
-  animation: spinAndInsert 6s ease-in-out forwards;
+  animation: rollAcross 8s linear infinite;
+  box-shadow: 0 0 25px rgba(255,255,255,0.5);
   z-index: 3;
 }}
 
-@keyframes spinAndInsert {{
+@keyframes rollAcross {{
   0% {{
-    transform: translateX(-50%) translateY(80px) rotate(0deg);
-    opacity: 0;
+    left: -150px;
+    transform: rotate(0deg) translateY(0);
   }}
-  15% {{
-    opacity: 1;
+  25% {{
+    transform: rotate(360deg) translateY(-10px);
   }}
   50% {{
-    transform: translateX(-50%) translateY(-100px) rotate(720deg);
+    left: 50%;
+    transform: rotate(720deg) translateY(0);
   }}
-  80% {{
-    transform: translateX(-50%) translateY(-130px) rotate(1080deg);
-  }}
-  100% {{
-    transform: translateX(-50%) translateY(-160px) rotate(1260deg) scale(0.8);
-    opacity: 0.9;
-  }}
-}}
-
-/* --- DVD PLAYER --- */
-.player {{
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 320px;
-  height: 140px;
-  background: url("data:image/png;base64,{tray_base64}") no-repeat center/contain;
-  z-index: 1;
-}}
-
-/* --- TRAY KAPANMA VE IŞIK EFEKTİ --- */
-.tray-close {{
-  position: absolute;
-  bottom: 85px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 8px;
-  border-radius: 3px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
-  animation: trayLight 6s ease-in-out forwards;
-  filter: blur(3px);
-}}
-
-@keyframes trayLight {{
-  0%, 75% {{
-    opacity: 0;
-    width: 180px;
-  }}
-  85% {{
-    opacity: 1;
-    width: 200px;
+  75% {{
+    transform: rotate(1080deg) translateY(-10px);
   }}
   100% {{
-    opacity: 0;
-    width: 0;
+    left: 110%;
+    transform: rotate(1440deg) translateY(0);
   }}
 }}
 
@@ -228,13 +186,11 @@ div.stButton > button:hover {{
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- BAŞLIK VE ANİMASYON ----------------
+# ---------------- BAŞLIK VE SAHNE ----------------
 st.markdown("""
-<div class='title'>Tuğgen’in DVD Koleksiyonu 💿</div>
+<div class='title'>Tuğgen’in DVD Koleksiyonu </div>
 <div class='scene'>
-  <div class='player'></div>
   <div class='cd'></div>
-  <div class='tray-close'></div>
 </div>
 """, unsafe_allow_html=True)
 
