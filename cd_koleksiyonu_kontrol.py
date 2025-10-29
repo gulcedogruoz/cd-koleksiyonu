@@ -54,19 +54,74 @@ st.markdown(f"""
     padding-top: 100px !important;
 }}
 
-/* --- BAŞLIK --- */ 
+/* --- BAŞLIK (GOLD + CD ANİMASYONLU) --- */ 
 .title {{
+  position: relative;
+  display: inline-block;
   text-align: center;
   font-family: 'Cinzel Decorative', cursive;
   font-size: 72px;
-  background: linear-gradient(90deg, #fff2b2 0%, #ffd700 25%, #ffb600 50%, #fff2b2 75%, #ffd700 100%);
+  background: linear-gradient(90deg, #fff8c9, #ffd700, #ffb600, #fff9e6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 25px rgba(255, 215, 0, 0.9),
-               0 0 50px rgba(255, 200, 50, 0.5),
-               0 0 80px rgba(255, 180, 0, 0.3);
-  margin-bottom: 15px;
+               0 0 50px rgba(255, 200, 50, 0.6),
+               0 0 80px rgba(255, 160, 0, 0.4);
+  margin-bottom: 30px;
+  animation: fadeInTitle 2s ease-out forwards;
 }}
+
+@keyframes fadeInTitle {{
+  0% {{
+    opacity: 0;
+    transform: translateY(-25px);
+  }}
+  100% {{
+    opacity: 1;
+    transform: translateY(0);
+  }}
+}}
+
+/* --- CD ANİMASYONU --- */
+.cd {{
+  position: absolute;
+  left: -140px;
+  top: 50%;
+  width: 85px;
+  height: 85px;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #bbb 30%, #666 70%, #444 100%);
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+  animation: rollCD 3s ease-out forwards;
+  transform-origin: center;
+}}
+
+.cd::before {{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  background: #222;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}}
+
+@keyframes rollCD {{
+  0% {{
+    transform: translateX(0) rotate(0deg);
+    opacity: 0;
+  }}
+  20% {{
+    opacity: 1;
+  }}
+  100% {{
+    transform: translateX(230px) rotate(720deg);
+    opacity: 1;
+  }}
+}}
+
 
 
 /* --- ARAMA KUTUSU --- */
@@ -167,8 +222,13 @@ if "eslesenler" not in st.session_state:
 
 st.markdown("<div style='height:160px;'></div>", unsafe_allow_html=True)
 
-# --- BAŞLIK ---
-st.markdown("<h1 class='title'>Tuğgen’in DVD Koleksiyonu 💿</h1>", unsafe_allow_html=True)
+st.markdown("""
+<div class='title'>
+  <div class='cd'></div>
+  Tuğgen’in DVD Koleksiyonu 💿
+</div>
+""", unsafe_allow_html=True)
+
 
 
 # --- GİRİŞ ALANI ---
