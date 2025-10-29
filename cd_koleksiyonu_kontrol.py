@@ -37,43 +37,44 @@ cd_base64 = get_base64_image("cd_disk.png")
 # ---------------- CSS ----------------
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
 
-/* GENEL */
+/* ---------------- GENEL ---------------- */
 .stApp {{
-  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.75)),
+  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.8)),
               url("data:image/jpg;base64,{bg_base64}");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   color: #fff9e6;
-  font-family: 'Playfair Display SC', serif;
-  padding-top: -10px !important;  /* 🔽 yüz görünür */
+  font-family: 'Playfair Display', serif;
+  padding-top: 200px !important;
   overflow: hidden;
 }}
 
-/* BAŞLIK */
+/* ---------------- BAŞLIK ---------------- */
 .title {{
   text-align: center;
-  font-size: 58px;
-  font-weight: 600;
-  font-style: italic;
-  background: linear-gradient(90deg, #fff3c4, #ffd27f, #ffb84c, #ffe7b2);
+  font-family: 'Playfair Display', serif;
+  font-size: 62px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  background: linear-gradient(45deg, #FFD700, #DAA520, #FFD700);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 18px rgba(255, 220, 150, 0.8),
-               0 0 32px rgba(255, 180, 70, 0.4);
-  animation: fadeInTitle 2s ease-out forwards;
+  text-shadow:
+    0 0 8px rgba(255, 215, 0, 0.8),
+    0 0 20px rgba(255, 200, 0, 0.5),
+    0 0 40px rgba(255, 160, 0, 0.3);
+  animation: shimmer 6s infinite linear;
   margin-bottom: -20px;
-  letter-spacing: 1px;
+}}
+@keyframes shimmer {{
+  0% {{ background-position: 0% 50%; }}
+  100% {{ background-position: 100% 50%; }}
 }}
 
-@keyframes fadeInTitle {{
-  0% {{ opacity: 0; transform: translateY(-15px); }}
-  100% {{ opacity: 1; transform: translateY(0); }}
-}}
-
-/* CD ANİMASYONU */
+/* ---------------- CD ANİMASYONU ---------------- */
 .scene {{
   position: relative;
   width: 100%;
@@ -81,7 +82,6 @@ st.markdown(f"""
   margin: 10px auto 5px auto;
   overflow: hidden;
 }}
-
 .cd {{
   position: absolute;
   bottom: 10px;
@@ -94,14 +94,13 @@ st.markdown(f"""
   box-shadow: 0 0 16px rgba(255,255,255,0.4);
   z-index: 3;
 }}
-
 @keyframes rollAcross {{
   0% {{ left: -150px; transform: rotate(0deg); }}
   50% {{ left: 50%; transform: rotate(720deg); }}
   100% {{ left: 110%; transform: rotate(1440deg); }}
 }}
 
-/* ARAMA KUTUSU */
+/* ---------------- ARAMA KUTUSU ---------------- */
 div[data-testid="stTextInputRoot"] > div:first-child {{
   background: transparent !important;
   box-shadow: none !important;
@@ -109,69 +108,64 @@ div[data-testid="stTextInputRoot"] > div:first-child {{
 }}
 
 input[type="text"] {{
-  background-color: rgba(255,255,255,0.95) !important;
-  border: 3px solid #ffb84c !important;
-  border-radius: 18px !important;
-  padding: 14px 20px !important;
-  color: #3b2f2f !important;
+  background-color: rgba(240,240,240,0.12) !important;  /* 🔹 hafif gri */
+  border: 2px solid #DAA520 !important;  /* altın kenarlık */
+  border-radius: 10px !important;
+  padding: 12px 40px 12px 45px !important;
+  color: #FFD700 !important;  /* altın yazı */
   font-size: 18px !important;
-  text-align: center !important;
+  font-family: 'Playfair Display', serif !important;
   font-weight: 500 !important;
-  box-shadow: 0 0 12px rgba(255,200,100,0.4);
+  box-shadow: 0 0 10px rgba(218,165,32,0.25);
+  position: relative;
+  background-image: url("data:image/png;base64,{cd_base64}");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 22px 22px;
+  transition: all 0.3s ease-in-out;
+}}
+
+input[type="text"]:focus {{
+  border-color: #FFD700 !important;
+  box-shadow: 0 0 15px rgba(255,215,0,0.5);
 }}
 
 input[type="text"]::placeholder {{
-  color: #6b4a12 !important;
-  opacity: 0.85 !important;
+  color: rgba(255,215,0,0.7) !important;
   font-style: italic;
 }}
 
-/* BUTONLAR */
+@keyframes moveCD {{
+  0% {{ background-position: 10px center; }}
+  100% {{ background-position: calc(100% - 10px) center; }}
+}}
+
+input[type="text"]:focus {{
+  animation: moveCD 3s linear infinite alternate;
+}}
+
+/* ---------------- BUTONLAR ---------------- */
 div.stButton > button:first-child {{
-  background: linear-gradient(135deg, #ffcc80 0%, #ffb84c 100%);
-  color: #2e1b0e;
+  background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
+  color: white;
   font-weight: bold;
   font-size: 17px;
-  border-radius: 40px;
+  border-radius: 30px;
   border: none;
-  padding: 8px 22px;
-  margin-top: 6px;
-  box-shadow: 0 0 18px rgba(255,170,50,0.3);
+  padding: 10px 25px;
+  margin-top: 10px;
+  box-shadow: 0 0 10px rgba(255,215,0,0.3);
   transition: all 0.25s ease-in-out;
 }}
 div.stButton > button:hover {{
-  background: linear-gradient(135deg, #ffe4b3, #ffc980);
+  background: linear-gradient(135deg, #FFD700, #FFF2A6);
+  color: black;
+  box-shadow: 0 0 20px rgba(255,215,0,0.7);
   transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255,200,100,0.6);
-}}
-
-/* KOLEKSİYON LİSTESİ */
-.dvd-list {{
-  background: rgba(0, 0, 0, 0.55);
-  padding: 15px 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 216, 128, 0.4);
-  margin-top: 10px;
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.05);
-}}
-.dvd-item {{
-  padding: 5px 0;
-  font-size: 16px;
-  border-bottom: 1px dashed rgba(255, 215, 128, 0.2);
-}}
-.dvd-num {{
-  color: #ffdd91;
-  font-weight: bold;
-}}
-.collection-title {{
-  font-size: 24px;
-  color: #ffe6b3;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 15px;
 }}
 </style>
 """, unsafe_allow_html=True)
+
 
 # ---------------- BAŞLIK + CD ----------------
 st.markdown("""
