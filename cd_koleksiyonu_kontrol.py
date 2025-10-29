@@ -37,11 +37,11 @@ cd_base64 = get_base64_image("cd_disk.png")
 # ---------------- CSS ----------------
 st.markdown(f"""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap');
 
 /* ---------------- GENEL ---------------- */
 .stApp {{
-  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.75)),
+  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.85)),
               url("data:image/jpg;base64,{bg_base64}");
   background-size: cover;
   background-position: center;
@@ -52,25 +52,27 @@ st.markdown(f"""
   overflow: hidden;
 }}
 
-/* ---------------- BAŞLIK (ALTIN YANSIMA) ---------------- */
+/* ---------------- BAŞLIK ---------------- */
 .title {{
-    font-family: 'Playfair Display', serif;
-    font-size: 3.5em; 
-    font-weight: 700;
-    text-align: center;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 58px;
+  font-style: italic;
+  font-weight: 600;
+  background: linear-gradient(90deg, #fff3c4, #ffd27f, #ffb84c, #ffe7b2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 0 18px rgba(255, 220, 150, 0.8),
+    0 0 32px rgba(255, 180, 70, 0.4);
+  animation: fadeInTitle 2s ease-out forwards;
+  margin-bottom: -10px;
+  letter-spacing: 1px;
+}}
 
-    /* ALTIN YANSIMA */
-    color: #FFD700; /* Parlak altın rengi */
-    text-shadow: 
-        0 0 5px rgba(255, 215, 0, 0.7),
-        0 0 10px rgba(255, 215, 0, 0.5),
-        0 0 15px rgba(255, 215, 0, 0.3);
-        
-    background: linear-gradient(45deg, #FFD700, #DAA520, #FFD700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-
-    margin-bottom: -10px;
+@keyframes fadeInTitle {{
+  0% {{ opacity: 0; transform: translateY(-15px); }}
+  100% {{ opacity: 1; transform: translateY(0); }}
 }}
 
 /* ---------------- CD ANİMASYONU ---------------- */
@@ -81,6 +83,7 @@ st.markdown(f"""
   margin: 10px auto 5px auto;
   overflow: hidden;
 }}
+
 .cd {{
   position: absolute;
   bottom: 10px;
@@ -90,9 +93,11 @@ st.markdown(f"""
   border-radius: 50%;
   background: url("data:image/png;base64,{cd_base64}") no-repeat center/cover;
   animation: rollAcross 8s linear infinite;
-  box-shadow: 0 0 16px rgba(255,255,255,0.4);
+  box-shadow: 0 0 16px rgba(255,215,100,0.4);
+  filter: hue-rotate(40deg) brightness(1.4); /* 🔸 altın tonuna geçiş */
   z-index: 3;
 }}
+
 @keyframes rollAcross {{
   0% {{ left: -150px; transform: rotate(0deg); }}
   50% {{ left: 50%; transform: rotate(720deg); }}
@@ -107,62 +112,56 @@ div[data-testid="stTextInputRoot"] > div:first-child {{
 }}
 
 input[type="text"] {{
-  background-color: rgba(240,240,240,0.12) !important;
-  border: 2px solid #DAA520 !important;
-  border-radius: 10px !important;
-  padding: 12px 40px 12px 45px !important;
-  color: #FFD700 !important;
+  background-color: rgba(10,10,10,0.75) !important; /* 🔸 koyu siyah ton */
+  border: 2px solid #ffb84c !important; /* altın çerçeve */
+  border-radius: 18px !important;
+  padding: 14px 45px !important;
+  color: #f9d77b !important; /* sıcak altın yazı */
   font-size: 18px !important;
   font-family: 'Playfair Display', serif !important;
   font-weight: 500 !important;
-  box-shadow: 0 0 10px rgba(218,165,32,0.25);
   background-image: url("data:image/png;base64,{cd_base64}");
   background-repeat: no-repeat;
   background-position: 10px center;
   background-size: 22px 22px;
-  transition: all 0.3s ease-in-out;
+  filter: hue-rotate(40deg) brightness(1.3); /* altın renkli CD */
+  box-shadow: inset 0 0 12px rgba(255,200,80,0.2),
+              0 0 8px rgba(255,180,70,0.3);
+  transition: all 0.25s ease-in-out;
 }}
 
 input[type="text"]:focus {{
-  border-color: #FFD700 !important;
-  box-shadow: 0 0 15px rgba(255,215,0,0.5);
+  border-color: #ffd700 !important;
+  box-shadow: 0 0 15px rgba(255,215,0,0.6);
 }}
 
 input[type="text"]::placeholder {{
-  color: rgba(255,215,0,0.7) !important;
+  color: rgba(255, 230, 170, 0.75) !important;
   font-style: italic;
-}}
-
-@keyframes moveCD {{
-  0% {{ background-position: 10px center; }}
-  100% {{ background-position: calc(100% - 10px) center; }}
-}}
-
-input[type="text"]:focus {{
-  animation: moveCD 3s linear infinite alternate;
 }}
 
 /* ---------------- BUTONLAR ---------------- */
 div.stButton > button:first-child {{
-  background: linear-gradient(135deg, #DAA520 0%, #FFD700 100%);
-  color: white;
+  background: linear-gradient(135deg, #ffb84c 0%, #ff8800 100%);
+  color: #1b0e0e;
   font-weight: bold;
   font-size: 17px;
-  border-radius: 30px;
+  border-radius: 40px;
   border: none;
-  padding: 10px 25px;
-  margin-top: 10px;
-  box-shadow: 0 0 10px rgba(255,215,0,0.3);
+  padding: 8px 22px;
+  margin-top: 6px;
+  box-shadow: 0 0 18px rgba(255,136,0,0.3);
   transition: all 0.25s ease-in-out;
 }}
+
 div.stButton > button:hover {{
-  background: linear-gradient(135deg, #FFD700, #FFF2A6);
-  color: black;
-  box-shadow: 0 0 20px rgba(255,215,0,0.7);
+  background: linear-gradient(135deg, #ffdd91, #ffb84c);
   transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255,200,100,0.6);
 }}
 </style>
 """, unsafe_allow_html=True)
+
 
 
 
