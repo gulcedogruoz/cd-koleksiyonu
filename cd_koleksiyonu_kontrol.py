@@ -64,7 +64,7 @@ st.markdown(f"""
   text-shadow: 0 0 18px rgba(255, 220, 150, 0.8),
                0 0 32px rgba(255, 180, 70, 0.4);
   animation: fadeInTitle 2s ease-out forwards;
-  margin-bottom: -100px;
+  margin-bottom: -10px;
   letter-spacing: 1px;
 }}
 
@@ -175,7 +175,7 @@ div.stButton > button:hover {{
 
 # ---------------- BAŞLIK + CD ----------------
 st.markdown("""
-<div class='title'>Tuğgen’in DVD Koleksiyonu 💿</div>
+<div class='title'>Tuğgen’in DVD Koleksiyonu</div>
 <div class='scene'><div class='cd'></div></div>
 """, unsafe_allow_html=True)
 
