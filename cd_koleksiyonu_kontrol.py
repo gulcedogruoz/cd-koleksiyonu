@@ -175,9 +175,12 @@ div.stButton > button:hover {{
 
 # ---------------- BAŞLIK + CD ----------------
 st.markdown("""
+<div style="height:120px;"></div>   <!-- 🔽 YAZIYI AŞAĞI KAYDIR -->
 <div class='title'>Tuğgen’in DVD Koleksiyonu</div>
+<div style="height:40px;"></div>    <!-- CD animasyonuna küçük boşluk -->
 <div class='scene'><div class='cd'></div></div>
 """, unsafe_allow_html=True)
+
 
 # ---------------- STREAMLIT MANTIK ----------------
 if "dvd_yok" not in st.session_state:
